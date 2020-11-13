@@ -23,12 +23,18 @@ router.get("/activityTask", async (req, res) => {
 
 //Details
 
-router.get("/activityTask/:id", async (req, res) => {
-  try {
-    console.log("conectou a  /activityTask/:id ")
-    const { id } = req.params;
+router.get("/ActivityTaskReed/day/:id", async (req, res) => {
 
-    const result = await ActivityTask.findOne({ _id: id });
+  const { id } = req.params;
+
+  console.log("id = ", id)
+
+
+  try {
+    console.log(`conectou a  /ActivityTaskReed/day/${id}`)
+    
+
+    const result = await ActivityTask.find({day: id});
 
     console.log(result);
 
@@ -41,22 +47,22 @@ router.get("/activityTask/:id", async (req, res) => {
 
 //Read somente para o perfil do usuário:
 
-router.get("/activityTask/user/:userId",
-  passport.authenticate("jwt", { session: false }), async (req, res) => {
-    try {
-      console.log("conectou a  /activityTask/user/:id ")
+// router.get("/ActivityTaskReed/day/:id",
+//   passport.authenticate("jwt", { session: false }), async (req, res) => {
+//     try {
+//       console.log("conectou a  /activityTask/user/:id ")
       
-      req.body.user = req.params.userId;
+//       req.body.user = req.params.userId;
 
-      const result = await ActivityTask.find({user: req.user._id}).populate("user");
+//       const result = await ActivityTask.find({user: req.user._id}).populate("user");
 
-      console.log("prod READ result = ", result);
+//       console.log("prod READ result = ", result);
 
-      return res.status(200).json(result);
-    } catch (err) {
-      return res.status(500).json({ error: err });
-    }
-});
+//       return res.status(200).json(result);
+//     } catch (err) {
+//       return res.status(500).json({ error: err });
+//     }
+// });
 
 //Create:
 
@@ -82,7 +88,7 @@ router.post(
 //Update:
 
 router.patch(
-  "/activityTask/:id",
+  "/ActivityTask/Update/:id",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
@@ -105,7 +111,7 @@ router.patch(
 //Delete:
 
 router.delete(
-  "/activityTask/:id",
+  "/activityTask/Delete/:id",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
