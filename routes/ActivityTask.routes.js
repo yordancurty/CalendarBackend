@@ -42,26 +42,26 @@ router.get("/activityTask/:id", async (req, res) => {
 //Read somente para o perfil do usuário:
 
 router.get("/activityTask/user/:userId",
-passport.authenticate("jwt", { session: false }), async (req, res) => {
-  try {
-    console.log("conectou a  /activityTask/user/:id ")
-    
-    req.body.user = req.params.userId;
+  passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+      console.log("conectou a  /activityTask/user/:id ")
+      
+      req.body.user = req.params.userId;
 
-    const result = await ActivityTask.find({user: req.user._id}).populate("user");
+      const result = await ActivityTask.find({user: req.user._id}).populate("user");
 
-    console.log("prod READ result = ", result);
+      console.log("prod READ result = ", result);
 
-    return res.status(200).json(result);
-  } catch (err) {
-    return res.status(500).json({ error: err });
-  }
+      return res.status(200).json(result);
+    } catch (err) {
+      return res.status(500).json({ error: err });
+    }
 });
 
 //Create:
 
 router.post(
-  "/activityTask/:userId",
+  "/ActivityTaskForm/day/:id",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
